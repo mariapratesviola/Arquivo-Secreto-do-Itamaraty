@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquivo Secreto do Itamaraty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a declassified government archive, tense but classroom-friendly.
+   IDEA: a manila dossier with six folder tabs; each folder is unlocked with a code.
+   PICTURE: the folder tabs and the open folder itself, stamped when solved.
+   COLOUR and TYPE: kraft and paper, black ink, red rubber stamp; typewriter titles over a plain sans.
+   LAYOUT: timer band on top, tab strip, one open folder below; stacks on phones. */
+:root{color-scheme:light dark;
+--bg:light-dark(#D6C09A,#16130F);
+--paper:light-dark(#F5EEDF,#26211B);
+--paper2:light-dark(#EBE0C9,#2F2922);
+--ink:light-dark(#1E1A15,#EEE5D4);
+--soft:light-dark(#4F463B,#BDB2A0);
+--red:light-dark(#A3241C,#E46F63);
+--ok:light-dark(#2D5A37,#7FC28E);
+--line:light-dark(#B8A27E,#4A4136)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,.tw{font-family:"Special Elite","Courier New",monospace;font-weight:400}
+a{color:var(--red)}
+.wrap{max-width:980px;margin:0 auto;padding:0 max(4vw,16px)}
+header{padding:28px 0 18px}
+.top{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+h1{margin:0;font-size:clamp(30px,5vw,46px);line-height:1.05;text-wrap:balance}
+.sub{color:var(--soft);margin-top:4px}
+.clock{background:var(--ink);color:var(--paper);padding:12px 18px;min-width:200px}
+.clock b{display:block;font-family:"Special Elite",monospace;font-size:34px;line-height:1.1;font-weight:400;white-space:nowrap}
+.clock span{font-size:13px;opacity:.85}
+.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:22px}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;padding:6px 4px;background:var(--paper2);color:var(--ink);text-decoration:none;border-radius:8px 8px 0 0;border:1px solid var(--line);border-bottom:0;font-size:13px;text-align:center;position:relative}
+.tab .n{font-family:"Special Elite",monospace;font-size:22px;line-height:1}
+.tab.on{background:var(--paper);font-weight:700}
+.tab.done .n{color:var(--ok)}
+.tab.done::after{content:"aberta";font-size:11px;color:var(--ok)}
+.tab.lock{opacity:.55}
+.tab:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.folder{background:var(--paper);padding:clamp(20px,4vw,40px);border:1px solid var(--line);border-top:0;box-shadow:0 10px 24px rgba(0,0,0,.18);position:relative;min-height:420px}
+.folder h2{margin:0;font-size:clamp(30px,4.6vw,44px);line-height:1.05}
+.year{color:var(--soft);font-size:15px;margin-top:4px}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;margin-top:22px}
+.box{background:var(--paper2);padding:16px 18px}
+.box h3{margin:0 0 6px;font-size:20px}
+.box p{margin:0}
+label{display:block;font-weight:600;margin-bottom:6px}
+.code{display:flex;gap:10px;flex-wrap:wrap}
+input[type=text]{flex:1 1 180px;height:52px;font:22px "Special Elite",monospace;letter-spacing:.12em;text-transform:uppercase;padding:0 14px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:0}
+button{min-height:48px;padding:0 20px;font:600 16px "IBM Plex Sans",sans-serif;border:2px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:0}
+button.ghost{background:transparent;color:var(--ink)}
+button.red{background:var(--red);border-color:var(--red);color:#fff}
+.msg{min-height:26px;margin-top:8px;font-weight:600}
+.msg.err{color:var(--red)}
+.hints{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.hint{border:1px dashed var(--line);padding:12px 14px}
+.hint p{margin:6px 0 0}
+.stamp{position:absolute;top:22px;right:22px;border:4px solid var(--ok);color:var(--ok);font:26px "Special Elite",monospace;padding:4px 14px;transform:rotate(-8deg);animation:hit .35s ease-out}
+@keyframes hit{from{transform:rotate(-8deg) scale(1.8);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.stamp{animation:none}}
+.next{margin-top:18px;background:var(--ink);color:var(--paper);padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.next a{color:var(--paper);font-weight:700}
+.start{max-width:520px}
+.start p{margin:0 0 14px}
+.list{margin:0;padding-left:20px}
+.list li{margin-bottom:8px}
+.final-q{background:var(--ink);color:var(--paper);padding:20px 22px;margin-top:22px;font-size:19px}
+.sum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.sum div{background:var(--paper2);padding:12px 14px;font-size:15px}
+.sum b{font-family:"Special Elite",monospace;font-weight:400;font-size:18px;color:var(--red)}
+footer{padding:26px 0 40px;color:var(--soft);font-size:14px}
+details{background:var(--paper);border:1px solid var(--line);padding:12px 16px;margin-bottom:14px;color:var(--ink)}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+.confirm{display:none;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.confirm.show{display:flex}
+@media(max-width:680px){.grid{grid-template-columns:minmax(0,1fr)}.tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.clock{width:100%}.sum{grid-template-columns:minmax(0,1fr)}.stamp{position:static;display:inline-block;margin-bottom:10px}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="top">
+    <div>
+      <h1>Arquivo Secreto do Itamaraty</h1>
+      <div class="sub">Ditadura militar, diplomacia e a questão racial · 1964–1985</div>
+    </div>
+    <div class="clock" aria-live="off">
+      <span id="grp">Grupo ainda não registrado</span>
+      <b id="time">00:00</b>
+      <span id="pen">Sem penalidades</span>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Pastas do arquivo"></nav>
+</header>
+<main class="wrap"><section class="folder" id="view" aria-live="polite"></section></main>
+<footer class="wrap">
+  <details>
+    <summary>Como jogar</summary>
+    <ol class="list">
+      <li>Cada envelope é uma pasta do arquivo. O QR code do envelope abre a pasta certa neste site.</li>
+      <li>Resolvam o enigma com os documentos do envelope e digitem o código aqui.</li>
+      <li>Código certo: a pasta é carimbada e vocês pedem o próximo envelope. Código errado não dá penalidade.</li>
+      <li>Travaram? Peçam uma dica: a dica 1 custa 1 minuto e a dica 2 custa 2 minutos.</li>
+      <li>Vence o grupo que abrir o arquivo final no menor tempo, somando as penalidades.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>Recomeçar o jogo neste celular</summary>
+    <p>Isso apaga o grupo, o tempo e as pastas abertas neste aparelho.</p>
+    <button class="ghost" id="ask">Recomeçar</button>
+    <div class="confirm" id="confirm"><span>Tem certeza?</span><button class="red" id="yes">Sim, apagar tudo</button><button class="ghost" id="no">Cancelar</button></div>
+  </details>
+  <p>Material didático. Documentos do jogo recriados para fins educativos; fatos e datas reais. Fontes: Gonçalves e Miyamoto (1993); Nascimento (1978).</p>
+</footer>
+<script>
+{
+const P=[
+ {t:'O alinhamento',y:'1964',env:'Três fichas fora de ordem (o golpe de 1964, o rompimento com Cuba e as tropas na República Dominicana), cada uma com um carimbo vermelho.',
+  q:'Coloquem as fichas em ordem cronológica e juntem os carimbos: que palavra completa “___ ideológicas”?',h:['5c61a2a8','b295d8a1'],
+  d:['A primeira ficha é a do golpe, em abril de 1964. Depois vem maio de 1964 e, por último, 1965.','Os carimbos em ordem são FRO + NTE + IRAS.'],
+  a:'FRONTEIRAS',ex:'Depois do golpe, o governo Castelo Branco alinhou o Brasil aos EUA. Pela ideia das fronteiras ideológicas, a divisão que importava era entre capitalismo e comunismo, não entre países.',
+  x:'Na mesma época, Portugal lutava para manter Angola, Moçambique e Guiné-Bissau, e o Brasil ficou ao lado do colonizador.'},
+ {t:'A crise',y:'1973',env:'O gráfico do preço do barril de petróleo e um recorte de jornal sobre a crise.',
+  q:'Em que ano o preço do barril disparou?',h:['2249a831'],
+  d:['Procurem no gráfico o ponto em que a linha dá um salto.','Foi o ano da guerra árabe-israelense de outubro. O ano termina em 3.'],
+  a:'1973',ex:'Depois da guerra de outubro de 1973, os países árabes da OPEP cortaram a produção e o preço do barril quase quadruplicou. O Brasil importava a maior parte do petróleo que consumia.',
+  x:'Com o fim do “milagre econômico”, o país passou a buscar energia e mercados novos, e a África e o Oriente Médio ganharam peso.'},
+ {t:'Angola',y:'1975',env:'Fichas do MPLA, da FNLA e da UNITA, com líderes, orientação e apoios externos.',
+  q:'Qual movimento o Brasil reconheceu como governo de Angola? Digitem a sigla.',h:['a4a3a507'],
+  d:['O governo militar era anticomunista. Qual escolha seria a mais surpreendente?','É o movimento apoiado pela URSS e por Cuba.'],
+  a:'MPLA',ex:'Na independência de Angola, em novembro de 1975, o Brasil reconheceu o governo do MPLA, marxista, enquanto os EUA apoiavam os rivais. É o retrato do pragmatismo responsável de Geisel.',
+  x:'A decisão abria caminho para mercados na África de língua portuguesa e para apoio do Terceiro Mundo na ONU.'},
+ {t:'A votação',y:'1975',env:'Um telegrama cifrado enviado de Nova York.',
+  q:'Decifrem o telegrama: qual é o número da resolução?',h:['bf436f5f'],
+  d:['Comparem a palavra “POV” com o nome da organização onde o voto aconteceu.','Cada letra foi trocada pela seguinte do alfabeto. Voltem uma letra para ler: o número vem escrito por extenso no fim.'],
+  a:'3379',ex:'Em 10 de novembro de 1975, a ONU aprovou a Resolução 3379, que classificou o sionismo como forma de racismo. O Brasil votou a favor, ao lado dos países árabes. Ela foi revogada em 1991.',
+  x:'O voto mostra o peso do petróleo na política externa depois de 1973.'},
+ {t:'Lagos',y:'1977',env:'Os pedaços rasgados da folha de rosto de um texto apresentado no FESTAC, na Nigéria.',
+  q:'Montem a folha de rosto. Qual é a palavra destacada em vermelho?',h:['7038a74e'],
+  d:['Comecem pelos pedaços com letras grandes: eles formam o título.','O título é uma pergunta que termina em “… ou realidade?”.'],
+  a:'MITO',ex:'No FESTAC de 1977, Abdias Nascimento apresentou o texto “Democracia racial: mito ou realidade?”, recusado pela organização do colóquio. Ele atribuiu o veto à pressão do governo brasileiro. Em 1978, o texto virou o livro O genocídio do negro brasileiro.',
+  x:'Uma denúncia de racismo num festival africano desmontava a imagem de harmonia que a diplomacia levava à África.'},
+ {t:'Os dois Brasis',y:'1978',env:'Um relatório com seis lacunas.',
+  q:'Completem o relatório com os códigos anteriores. Qual sigla preenche a última lacuna?',h:['5751a095','c84cf0d0'],
+  d:['Preencham as lacunas 1 a 5 com os códigos que vocês já têm. Falta só a última.','Movimento Negro Unificado: três letras.'],
+  a:'MNU',ex:'Em 7 de julho de 1978, nas escadarias do Theatro Municipal de São Paulo, nasceu o Movimento Negro Unificado, em protesto contra a discriminação racial e a violência policial.',
+  x:'Enquanto a diplomacia vendia harmonia racial, o movimento negro se organizava em plena ditadura para mostrar o contrário.'}
+];
+const KEY='arquivo-secreto-v1';
+const blank=()=>({g:'',s:0,o:{},d:{},f:0});
+let S=blank();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank(),JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+const fnv=s=>{let h=0x811c9dc5;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,0x01000193)>>>0}return h.toString(16)};
+const pen=()=>Object.keys(S.d).reduce((t,k)=>t+(k.endsWith('-1')?60:120),0);
+const opened=()=>P.filter((_,i)=>S.o[i+1]).length;
+const fmt=s=>{s=Math.max(0,Math.floor(s));const m=Math.floor(s/60),r=s%60;return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0')};
+const $=id=>document.getElementById(id);
+
+function tick(){
+  $('grp').textContent=S.g?S.g:'Grupo ainda não registrado';
+  if(!S.s){$('time').textContent='00:00';$('pen').textContent='O tempo começa ao registrar o grupo';return}
+  const end=S.f||Date.now();
+  const p=pen();
+  $('time').textContent=fmt((end-S.s)/1000+p);
+  $('pen').textContent=p?'Inclui '+(p/60)+' min de penalidade':'Sem penalidades';
+}
+const T=setInterval(tick,1000);
+
+function tabs(cur){
+  let h='';
+  P.forEach((p,i)=>{const n=i+1;const c=['tab',cur===n?'on':'',S.o[n]?'done':''].join(' ');
+    h+='<a class="'+c+'" href="#pasta-'+n+'" aria-label="Pasta '+n+', '+esc(p.t)+(S.o[n]?', aberta':'')+'"><span class="n">'+n+'</span><span>'+esc(p.t)+'</span></a>'});
+  const all=opened()===6;
+  h+='<a class="tab '+(cur==='f'?'on ':'')+(all?'':'lock')+'" href="#arquivo"><span class="n">★</span><span>Arquivo</span></a>';
+  $('tabs').innerHTML=h;
+}
+
+function startView(){
+  if(S.s){
+    const next=P.findIndex((_,i)=>!S.o[i+1]);
+    return '<h2>Arquivo em andamento</h2><p class="year">'+esc(S.g)+' · '+opened()+' de 6 pastas abertas</p>'+
+      '<div class="next"><span>'+(next<0?'Todas as pastas foram abertas.':'Próxima pasta: '+(next+1)+', '+esc(P[next].t)+'.')+'</span><a href="'+(next<0?'#arquivo':'#pasta-'+(next+1))+'">Continuar</a></div>';
+  }
+  return '<div class="start"><h2>Brasília, 1985</h2><p class="year">Um arquivo encontrado, trancado em seis pastas</p>'+
+    '<p style="margin-top:18px">O regime militar acabou e um arquivo da política externa da ditadura foi encontrado. Cada pasta só abre com um código. Para achá-lo, vocês precisam entender o que a diplomacia fez e o que ela escondia.</p>'+
+    '<form id="sf"><label for="gname">Nome do grupo</label><div class="code"><input type="text" id="gname" maxlength="24" autocomplete="off" required><button type="submit">Começar</button></div><div class="msg" id="smsg"></div></form></div>';
+}
+
+function pastaView(n){
+  const p=P[n-1];const done=!!S.o[n];
+  let h=(done?'<div class="stamp">ABERTA</div>':'')+'<h2>Pasta '+n+': '+esc(p.t)+'</h2><p class="year">'+p.y+'</p>';
+  h+='<div class="grid"><div>';
+  h+='<div class="box"><h3>No envelope</h3><p>'+esc(p.env)+'</p></div>';
+  if(!S.s) h+='<p class="msg err">Registrem o grupo na <a href="#inicio">página inicial</a> antes de começar.</p>';
+  if(done){
+    h+='<div class="box" style="margin-top:14px"><h3>O que estava na pasta</h3><p>'+esc(p.ex)+'</p></div>';
+    h+='<div class="hint" style="margin-top:14px"><b>Do arquivo:</b> '+esc(p.x)+'</div>';
+  }
+  h+='</div><div>';
+  if(done){
+    h+='<p class="tw" style="font-size:22px;margin:0">Código: '+p.a+'</p>';
+    h+='<div class="next"><span>'+(n<6?'Peçam o envelope '+(n+1)+'.':'O arquivo está aberto.')+'</span><a href="'+(n<6?'#pasta-'+(n+1):'#arquivo')+'">'+(n<6?'Ir para a pasta '+(n+1):'Abrir o arquivo final')+'</a></div>';
+  }else{
+    h+='<form id="cf"><label for="cin">'+esc(p.q)+'</label><div class="code"><input type="text" id="cin" autocomplete="off" autocapitalize="characters" spellcheck="false"'+(S.s?'':' disabled')+'><button type="submit"'+(S.s?'':' disabled')+'>Abrir</button></div><div class="msg" id="cmsg"></div></form>';
+    h+='<div class="hints">';
+    p.d.forEach((t,i)=>{const k=n+'-'+(i+1);const cost=i?2:1;
+      h+='<div class="hint">'+(S.d[k]?'<b>Dica '+(i+1)+'</b><p>'+esc(t)+'</p>':
+        '<button class="ghost" data-hint="'+k+'"'+(S.s&&(i===0||S.d[n+'-1'])?'':' disabled')+'>Ver dica '+(i+1)+' (+'+cost+' min)</button>')+'</div>'});
+    h+='</div>';
+  }
+  return h+'</div></div>';
+}
+
+function finalView(){
+  if(opened()<6) return '<h2>Arquivo final</h2><p class="year">Ainda trancado</p><p>Abram as seis pastas para liberar o arquivo. Faltam '+(6-opened())+'.</p>';
+  const total=fmt((S.f-S.s)/1000+pen());
+  let h='<div class="stamp">LIBERADO</div><h2>Os dois Brasis</h2><p class="year">'+esc(S.g)+' · tempo final '+total+'</p>';
+  h+='<p style="margin-top:18px">Lá fora, a ditadura se aproximava da África e vendia a imagem de um país sem racismo. Aqui dentro, o movimento negro denunciava a discriminação e era vigiado. As seis pastas são a mesma história, contada de dois lados.</p>';
+  h+='<div class="sum">'+P.map((p,i)=>'<div><b>'+p.a+'</b> · '+(i+1)+'. '+esc(p.t)+' ('+p.y+')</div>').join('')+'</div>';
+  h+='<div class="final-q">Para o debate: a aproximação com a África foi solidariedade ou estratégia? E o que a imagem de “país sem racismo” escondia aqui dentro?</div>';
+  return h;
+}
+
+function route(){
+  const m=location.hash.match(/^#pasta-([1-6])$/);
+  let cur=0,h;
+  if(m){cur=+m[1];h=pastaView(cur)}
+  else if(location.hash==='#arquivo'){cur='f';h=finalView()}
+  else h=startView();
+  $('view').innerHTML=h;tabs(cur);tick();
+  const sf=$('sf');
+  if(sf) sf.addEventListener('submit',e=>{e.preventDefault();const g=$('gname').value.trim();
+    if(!g){$('smsg').textContent='Digitem o nome do grupo.';$('smsg').className='msg err';return}
+    S.g=g;S.s=Date.now();save();location.hash='#pasta-1';route()});
+  const cf=$('cf');
+  if(cf) cf.addEventListener('submit',e=>{e.preventDefault();const v=norm($('cin').value);const msg=$('cmsg');
+    if(!v){msg.textContent='Digitem um código.';msg.className='msg err';return}
+    if(P[cur-1].h.includes(fnv(v))){S.o[cur]=1;if(opened()===6&&!S.f)S.f=Date.now();save();route()}
+    else{msg.textContent='Código incorreto. Releiam os documentos ou peçam uma dica.';msg.className='msg err';$('cin').select()}});
+  document.querySelectorAll('[data-hint]').forEach(b=>b.addEventListener('click',()=>{S.d[b.dataset.hint]=1;save();route()}));
+}
+window.addEventListener('hashchange',route);
+$('ask').addEventListener('click',()=>$('confirm').classList.add('show'));
+$('no').addEventListener('click',()=>$('confirm').classList.remove('show'));
+$('yes').addEventListener('click',()=>{S=blank();save();$('confirm').classList.remove('show');location.hash='#inicio';route()});
+route();
+}
+</script>
+</body>
+</html>
