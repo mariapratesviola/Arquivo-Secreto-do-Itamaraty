@@ -104,7 +104,8 @@ summary{cursor:pointer;font-weight:600;min-height:32px}
     <ol class="list">
       <li>Cada envelope é uma pasta do arquivo. O QR code do envelope abre a pasta certa neste site.</li>
       <li>Resolvam o enigma com os documentos do envelope e digitem o código aqui.</li>
-      <li>Código certo: a pasta é carimbada e vocês pedem o próximo envelope. Código errado não dá penalidade.</li>
+      <li>Código certo: o site faz uma pergunta sobre o que vocês descobriram. Acertando, a pasta é carimbada e vocês pedem o próximo envelope.</li>
+      <li>Código errado não dá penalidade. Resposta errada na pergunta custa 1 minuto.</li>
       <li>Travaram? Peçam uma dica: a dica 1 custa 1 minuto e a dica 2 custa 2 minutos.</li>
       <li>Vence o grupo que abrir o arquivo final no menor tempo, somando as penalidades.</li>
     </ol>
@@ -119,48 +120,18 @@ summary{cursor:pointer;font-weight:600;min-height:32px}
 </footer>
 <script>
 {
-const P=[
- {t:'O alinhamento',y:'1961–1968',env:'Seis fichas do arquivo, fora de ordem, cada uma com um número carimbado, e um quadro de contexto.',
-  q:'Quais fichas seguem a doutrina das fronteiras ideológicas? Em ordem cronológica, os números delas formam o código.',h:['9f2db8f3'],
-  d:['Releiam o contexto: a doutrina é a de Castelo Branco, depois do golpe de 1964, alinhada aos EUA contra o comunismo. As fichas de 1961 seguem outra lógica.','São três fichas, entre maio de 1964 e 1965. A de 1968 fica de fora: recusar um tratado defendido pelos EUA não é alinhamento.'],
-  a:'417',ex:'Seguem as fronteiras ideológicas o rompimento com Cuba (maio de 1964), o discurso de Castelo Branco (julho de 1964) e as tropas na República Dominicana (1965). As fichas de 1961 são da Política Externa Independente, que buscava autonomia na Guerra Fria.',
-  x:'O alinhamento não durou: em 1968, o Brasil recusou o Tratado de Não Proliferação Nuclear, defendido pelos EUA e pela União Soviética.'},
- {t:'A crise',y:'1973',env:'O gráfico do preço do barril de petróleo e um recorte de jornal sobre a crise.',
-  q:'Em que ano o preço do barril disparou?',h:['2249a831'],
-  d:['Procurem no gráfico o ponto em que a linha dá um salto.','Foi o ano da guerra árabe-israelense de outubro. O ano termina em 3.'],
-  a:'1973',ex:'Depois da guerra de outubro de 1973, os países árabes da OPEP cortaram a produção e o preço do barril quase quadruplicou. O Brasil importava a maior parte do petróleo que consumia.',
-  x:'Com o fim do “milagre econômico”, o país passou a buscar energia e mercados novos, e a África e o Oriente Médio ganharam peso.'},
- {t:'Angola',y:'1975',env:'Fichas do MPLA, da FNLA e da UNITA, com líderes, orientação e apoios externos.',
-  q:'Qual movimento o Brasil reconheceu como governo de Angola? Digitem a sigla.',h:['a4a3a507'],
-  d:['O governo militar era anticomunista. Qual escolha seria a mais surpreendente?','É o movimento apoiado pela URSS e por Cuba.'],
-  a:'MPLA',ex:'Na independência de Angola, em novembro de 1975, o Brasil reconheceu o governo do MPLA, marxista, enquanto os EUA apoiavam os rivais. É o retrato do pragmatismo responsável de Geisel.',
-  x:'A decisão abria caminho para mercados na África de língua portuguesa e para apoio do Terceiro Mundo na ONU.'},
- {t:'A votação',y:'1975',env:'Um telegrama cifrado enviado de Nova York.',
-  q:'Decifrem o telegrama: qual é o número da resolução?',h:['bf436f5f'],
-  d:['Comparem a palavra “POV” com o nome da organização onde o voto aconteceu.','Cada letra foi trocada pela seguinte do alfabeto. Voltem uma letra para ler: o número vem escrito por extenso no fim.'],
-  a:'3379',ex:'Em 10 de novembro de 1975, a ONU aprovou a Resolução 3379, que classificou o sionismo como forma de racismo. O Brasil votou a favor, ao lado dos países árabes. Ela foi revogada em 1991.',
-  x:'O voto mostra o peso do petróleo na política externa depois de 1973.'},
- {t:'Lagos',y:'1977',env:'Os pedaços rasgados da folha de rosto de um texto apresentado no FESTAC, na Nigéria.',
-  q:'Montem a folha de rosto. Qual é a palavra destacada em vermelho?',h:['7038a74e'],
-  d:['Comecem pelos pedaços com letras grandes: eles formam o título.','O título é uma pergunta que termina em “… ou realidade?”.'],
-  a:'MITO',ex:'No FESTAC de 1977, Abdias Nascimento apresentou o texto “Democracia racial: mito ou realidade?”, recusado pela organização do colóquio. Ele atribuiu o veto à pressão do governo brasileiro e contou o episódio em “Sitiado em Lagos”, capítulo de O quilombismo. Em 1978, a crítica virou o livro O genocídio do negro brasileiro.',
-  x:'Uma denúncia de racismo num festival africano desmontava a imagem de harmonia que a diplomacia levava à África.'},
- {t:'Os dois Brasis',y:'1978',env:'Um relatório com seis lacunas.',
-  q:'Completem o relatório com os códigos anteriores. Qual sigla preenche a última lacuna?',h:['5751a095','c84cf0d0'],
-  d:['Preencham as lacunas 1 a 5 com os códigos que vocês já têm. Falta só a última.','Movimento Negro Unificado: três letras.'],
-  a:'MNU',ex:'Em 7 de julho de 1978, nas escadarias do Theatro Municipal de São Paulo, nasceu o Movimento Negro Unificado, em protesto contra a discriminação racial e a violência policial. Entre os fundadores estava a intelectual Lélia Gonzalez.',
-  x:'Lélia Gonzalez chamou de “racismo por denegação” o racismo que se mantém negando que existe: exatamente o que a imagem de democracia racial fazia.'}
-];
-const KEY='arquivo-secreto-v1';
-const blank=()=>({g:'',s:0,o:{},d:{},f:0});
+const P=[{"t": "O alinhamento", "y": "1961–1968", "env": "Seis fichas do arquivo, fora de ordem, cada uma com um número carimbado, e um quadro de contexto.", "q": "Quais fichas seguem a doutrina das fronteiras ideológicas? Em ordem cronológica, os números delas formam o código.", "h": ["9f2db8f3"], "d": ["Releiam o contexto: a doutrina é a de Castelo Branco, depois do golpe de 1964, alinhada aos EUA contra o comunismo. As fichas de 1961 seguem outra lógica.", "São três fichas, entre maio de 1964 e 1965. A de 1968 fica de fora: recusar um tratado defendido pelos EUA não é alinhamento."], "a": "417", "ex": "Seguem as fronteiras ideológicas o rompimento com Cuba (maio de 1964), o discurso de Castelo Branco (julho de 1964) e as tropas na República Dominicana (1965). As fichas de 1961 são da Política Externa Independente, que buscava autonomia na Guerra Fria.", "x": "O alinhamento não durou: em 1968, o Brasil recusou o Tratado de Não Proliferação Nuclear, defendido pelos EUA e pela União Soviética.", "qq": "Por que romper com Cuba e mandar tropas à República Dominicana seguia as fronteiras ideológicas?", "op": ["Porque o Brasil queria ampliar seu comércio com o Caribe.", "Porque o governo via a Guerra Fria como uma divisão entre capitalismo e comunismo e se colocou ao lado dos EUA.", "Porque a ONU obrigou o Brasil a tomar essas decisões."], "ok": 1}, {"t": "A crise", "y": "1973", "env": "Cinco fichas de uma mesma história, fora de ordem, cada uma com um número carimbado.", "q": "Montem a cadeia de causa e consequência, da primeira causa à última consequência. Os números, nessa ordem, formam o código.", "h": ["b3bf5fef"], "d": ["Tudo começa com uma guerra no Oriente Médio, e termina com uma mudança na política externa brasileira.", "A ordem é: guerra, corte na produção, alta do preço, crise no Brasil, aproximação com árabes e africanos."], "a": "38164", "ex": "Em outubro de 1973, Egito e Síria atacaram Israel. Os países árabes produtores cortaram a produção de petróleo, e o preço do barril quase quadruplicou. O Brasil, que importava a maior parte do petróleo que consumia, viu o “milagre econômico” acabar e precisou de novos fornecedores e mercados.", "x": "Foi essa crise que empurrou a diplomacia brasileira para o Oriente Médio e para a África.", "qq": "Por que o choque do petróleo mudou a política externa brasileira?", "op": ["Porque o Brasil passou a exportar petróleo para os países árabes.", "Porque os EUA cortaram o comércio com o Brasil.", "Porque, dependente de petróleo importado, o Brasil precisou de novos fornecedores e de mercados para pagar a conta."], "ok": 2}, {"t": "Por que o MPLA?", "y": "1975", "env": "Fichas do MPLA, da FNLA e da UNITA e sete argumentos numerados sobre o reconhecimento de Angola.", "q": "Quais argumentos realmente pesaram na decisão de reconhecer o MPLA? Os números, em ordem crescente, formam o código.", "h": ["290d6c64"], "d": ["Lembrem o pragmatismo responsável: interesse nacional, não ideologia. Confiram nas fichas quem apoiava cada movimento.", "Ficam de fora a simpatia pelo marxismo, o “pedido dos EUA” (que apoiavam os rivais do MPLA) e as fronteiras ideológicas."], "a": "2579", "ex": "Pesaram os mercados na África de língua portuguesa (2), o apoio africano e do Terceiro Mundo na ONU (5), as boas relações com quem governava o novo país (7) e a vontade de apagar a imagem de aliado do colonialismo português (9). Não pesaram simpatia pelo marxismo nem pedido dos EUA, que apoiavam os rivais do MPLA.", "x": "Uma ditadura anticomunista reconhecendo um governo marxista: é o retrato do pragmatismo responsável de Geisel.", "qq": "Por que reconhecer o MPLA rompeu com as fronteiras ideológicas?", "op": ["Porque o Brasil, governado por militares anticomunistas, apoiou um movimento marxista por interesse nacional.", "Porque o MPLA era apoiado pelos EUA.", "Porque o governo brasileiro queria adotar o socialismo."], "ok": 0}, {"t": "A votação", "y": "1975", "env": "Um telegrama cifrado enviado de Nova York e quatro motivos possíveis para o voto, de A a D.", "q": "Decifrem o telegrama e escolham o motivo verdadeiro. O código é o número da resolução seguido da letra do motivo.", "h": ["3427eaa7"], "d": ["A cifra troca cada letra pela seguinte do alfabeto: “QBTUB” é “PASTA”. Voltem uma letra para ler.", "O contexto diz quem votou contra e quem votou a favor. O Brasil não seguiu os EUA: seguiu quem vendia petróleo."], "a": "3379B", "ex": "Em 10 de novembro de 1975, a ONU aprovou a Resolução 3379, que classificou o sionismo como forma de racismo. O Brasil votou a favor, ao lado dos países árabes, de quem dependia para o petróleo e onde queria vender seus produtos. A resolução foi revogada em 1991.", "x": "O Brasil não rompeu com Israel nem defendia o fim do país: o voto foi pragmático, como o reconhecimento do MPLA.", "qq": "O que o voto na Resolução 3379 mostra sobre a política externa de Geisel?", "op": ["Um alinhamento automático com os EUA.", "O peso do petróleo e da aproximação com os países árabes nas decisões.", "A saída do Brasil da ONU."], "ok": 1}, {"t": "Lagos", "y": "1977", "env": "A folha de rosto do texto de Abdias Nascimento para o FESTAC e oito afirmações sobre raça no Brasil, numeradas de 1 a 8.", "q": "Quais afirmações são a denúncia de Abdias, e não a imagem oficial? Digitem os números em ordem crescente.", "h": ["1496739c"], "d": ["A imagem oficial diz que no Brasil não há racismo. A denúncia mostra o que essa imagem esconde. São quatro de cada lado.", "As afirmações 1, 3, 5 e 6 são a imagem oficial. Sobram as outras quatro."], "a": "2478", "ex": "As afirmações 2, 4, 7 e 8 resumem a denúncia de Abdias Nascimento no texto “Democracia racial: mito ou realidade?”, levado ao FESTAC de 1977 e recusado pela organização do colóquio. Ele atribuiu o veto à pressão do governo brasileiro e contou o episódio em “Sitiado em Lagos”, capítulo de O quilombismo. Em 1978, a crítica virou o livro O genocídio do negro brasileiro.", "x": "As afirmações 1, 3, 5 e 6 eram a imagem que a ditadura levava à África: um país miscigenado, sem racismo e irmão natural do continente.", "qq": "Por que a denúncia de Abdias no FESTAC incomodava o governo brasileiro?", "op": ["Porque defendia o alinhamento do Brasil com os EUA.", "Porque desmentia, diante da África, a imagem de país sem racismo que a diplomacia usava.", "Porque criticava o governo da Nigéria."], "ok": 1}, {"t": "Os dois Brasis", "y": "1964–1978", "env": "Um relatório com cinco lacunas e um banco de oito conceitos, de A a H.", "q": "Preencham as lacunas com os conceitos do banco. As letras, na ordem das lacunas, formam o último código.", "h": ["92c60a56"], "d": ["Três conceitos sobram: a PEI e o universalismo são outras fases da política externa, e o Teatro Experimental do Negro é de 1944.", "As lacunas 1 e 2 são as doutrinas de Castelo Branco e de Geisel; a 3 é a imagem vendida lá fora; a 4 é o conceito de Lélia Gonzalez; a 5 é o movimento de 1978."], "a": "CGEBF", "ex": "Fronteiras ideológicas (C), pragmatismo responsável (G), democracia racial (E), racismo por denegação (B) e Movimento Negro Unificado (F). O MNU nasceu em 7 de julho de 1978, nas escadarias do Theatro Municipal de São Paulo, e Lélia Gonzalez estava entre os fundadores.", "x": "Lélia Gonzalez chamou de “racismo por denegação” o racismo que se mantém negando que existe: exatamente o que a imagem de democracia racial fazia.", "qq": "Qual é a relação entre os dois lados do arquivo?", "op": ["Nenhuma: política externa e questão racial são assuntos separados.", "O movimento negro apoiava a política africana do regime.", "A imagem de democracia racial usada lá fora dependia de negar o racismo aqui dentro."], "ok": 2}];
+const KEY='arquivo-secreto-v2';
+const blank=()=>({g:'',s:0,o:{},q:{},d:{},e:0,f:0});
+let lastErr=0;
 let S=blank();
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank(),JSON.parse(r))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]/g,'');
 const fnv=s=>{let h=0x811c9dc5;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,0x01000193)>>>0}return h.toString(16)};
-const pen=()=>Object.keys(S.d).reduce((t,k)=>t+(k.endsWith('-1')?60:120),0);
-const opened=()=>P.filter((_,i)=>S.o[i+1]).length;
+const pen=()=>Object.keys(S.d).reduce((t,k)=>t+(k.endsWith('-1')?60:120),0)+S.e*60;
+const opened=()=>P.filter((_,i)=>S.q[i+1]).length;
 const fmt=s=>{s=Math.max(0,Math.floor(s));const m=Math.floor(s/60),r=s%60;return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0')};
 const $=id=>document.getElementById(id);
 
@@ -170,14 +141,14 @@ function tick(){
   const end=S.f||Date.now();
   const p=pen();
   $('time').textContent=fmt((end-S.s)/1000+p);
-  $('pen').textContent=p?'Inclui '+(p/60)+' min de penalidade':'Sem penalidades';
+  $('pen').textContent=p?'Inclui '+Math.round(p/60)+' min de penalidade':'Sem penalidades';
 }
 const T=setInterval(tick,1000);
 
 function tabs(cur){
   let h='';
-  P.forEach((p,i)=>{const n=i+1;const c=['tab',cur===n?'on':'',S.o[n]?'done':''].join(' ');
-    h+='<a class="'+c+'" href="#pasta-'+n+'" aria-label="Pasta '+n+', '+esc(p.t)+(S.o[n]?', aberta':'')+'"><span class="n">'+n+'</span><span>'+esc(p.t)+'</span></a>'});
+  P.forEach((p,i)=>{const n=i+1;const c=['tab',cur===n?'on':'',S.q[n]?'done':''].join(' ');
+    h+='<a class="'+c+'" href="#pasta-'+n+'" aria-label="Pasta '+n+', '+esc(p.t)+(S.q[n]?', aberta':'')+'"><span class="n">'+n+'</span><span>'+esc(p.t)+'</span></a>'});
   const all=opened()===6;
   h+='<a class="tab '+(cur==='f'?'on ':'')+(all?'':'lock')+'" href="#arquivo"><span class="n">★</span><span>Arquivo</span></a>';
   $('tabs').innerHTML=h;
@@ -185,7 +156,7 @@ function tabs(cur){
 
 function startView(){
   if(S.s){
-    const next=P.findIndex((_,i)=>!S.o[i+1]);
+    const next=P.findIndex((_,i)=>!S.q[i+1]);
     return '<h2>Arquivo em andamento</h2><p class="year">'+esc(S.g)+' · '+opened()+' de 6 pastas abertas</p>'+
       '<div class="next"><span>'+(next<0?'Todas as pastas foram abertas.':'Próxima pasta: '+(next+1)+', '+esc(P[next].t)+'.')+'</span><a href="'+(next<0?'#arquivo':'#pasta-'+(next+1))+'">Continuar</a></div>';
   }
@@ -195,7 +166,7 @@ function startView(){
 }
 
 function pastaView(n){
-  const p=P[n-1];const done=!!S.o[n];
+  const p=P[n-1];const done=!!S.q[n];const coded=!!S.o[n];
   let h=(done?'<div class="stamp">ABERTA</div>':'')+'<h2>Pasta '+n+': '+esc(p.t)+'</h2><p class="year">'+p.y+'</p>';
   h+='<div class="grid"><div>';
   h+='<div class="box"><h3>No envelope</h3><p>'+esc(p.env)+'</p></div>';
@@ -208,6 +179,11 @@ function pastaView(n){
   if(done){
     h+='<p class="tw" style="font-size:22px;margin:0">Código: '+p.a+'</p>';
     h+='<div class="next"><span>'+(n<6?'Peçam o envelope '+(n+1)+'.':'O arquivo está aberto.')+'</span><a href="'+(n<6?'#pasta-'+(n+1):'#arquivo')+'">'+(n<6?'Ir para a pasta '+(n+1):'Abrir o arquivo final')+'</a></div>';
+  }else if(coded){
+    h+='<p class="tw" style="font-size:22px;margin:0">Código certo: '+p.a+'</p>';
+    h+='<div class="box" style="margin-top:14px"><h3>Antes de abrir: por quê?</h3><p>'+esc(p.qq)+'</p></div>';
+    h+='<div class="hints">'+p.op.map((o,i)=>'<button class="ghost opt" data-opt="'+i+'" style="text-align:left;padding:10px 14px;height:auto;line-height:1.4;font-weight:400">'+esc(o)+'</button>').join('')+'</div>';
+    h+='<div class="msg err" id="qmsg">'+(lastErr===n?'Resposta errada: +1 min. Releiam os documentos e tentem de novo.':'')+'</div>';
   }else{
     h+='<form id="cf"><label for="cin">'+esc(p.q)+'</label><div class="code"><input type="text" id="cin" autocomplete="off" autocapitalize="characters" spellcheck="false"'+(S.s?'':' disabled')+'><button type="submit"'+(S.s?'':' disabled')+'>Abrir</button></div><div class="msg" id="cmsg"></div></form>';
     h+='<div class="hints">';
@@ -243,8 +219,11 @@ function route(){
   const cf=$('cf');
   if(cf) cf.addEventListener('submit',e=>{e.preventDefault();const v=norm($('cin').value);const msg=$('cmsg');
     if(!v){msg.textContent='Digitem um código.';msg.className='msg err';return}
-    if(P[cur-1].h.includes(fnv(v))){S.o[cur]=1;if(opened()===6&&!S.f)S.f=Date.now();save();route()}
+    if(P[cur-1].h.includes(fnv(v))){S.o[cur]=1;lastErr=0;save();route()}
     else{msg.textContent='Código incorreto. Releiam os documentos ou peçam uma dica.';msg.className='msg err';$('cin').select()}});
+  document.querySelectorAll('[data-opt]').forEach(b=>b.addEventListener('click',()=>{const p=P[cur-1];
+    if(+b.dataset.opt===p.ok){S.q[cur]=1;lastErr=0;if(opened()===6&&!S.f)S.f=Date.now()}else{S.e++;lastErr=cur}
+    save();route()}));
   document.querySelectorAll('[data-hint]').forEach(b=>b.addEventListener('click',()=>{S.d[b.dataset.hint]=1;save();route()}));
 }
 window.addEventListener('hashchange',route);
