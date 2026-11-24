@@ -115,16 +115,16 @@ summary{cursor:pointer;font-weight:600;min-height:32px}
     <button class="ghost" id="ask">Recomeçar</button>
     <div class="confirm" id="confirm"><span>Tem certeza?</span><button class="red" id="yes">Sim, apagar tudo</button><button class="ghost" id="no">Cancelar</button></div>
   </details>
-  <p>Material didático. Documentos do jogo recriados para fins educativos; fatos e datas reais. Fontes: Gonçalves e Miyamoto (1993); Nascimento (1978).</p>
+  <p>Material didático. Documentos do jogo recriados para fins educativos; fatos e datas reais. Fontes: Gonçalves e Miyamoto (1993); Nascimento (1978; 1980); Ferreira (2013); Gonzalez (2020).</p>
 </footer>
 <script>
 {
 const P=[
- {t:'O alinhamento',y:'1964',env:'Três fichas fora de ordem (o golpe de 1964, o rompimento com Cuba e as tropas na República Dominicana), cada uma com um carimbo vermelho.',
-  q:'Coloquem as fichas em ordem cronológica e juntem os carimbos: que palavra completa “___ ideológicas”?',h:['5c61a2a8','b295d8a1'],
-  d:['A primeira ficha é a do golpe, em abril de 1964. Depois vem maio de 1964 e, por último, 1965.','Os carimbos em ordem são FRO + NTE + IRAS.'],
-  a:'FRONTEIRAS',ex:'Depois do golpe, o governo Castelo Branco alinhou o Brasil aos EUA. Pela ideia das fronteiras ideológicas, a divisão que importava era entre capitalismo e comunismo, não entre países.',
-  x:'Na mesma época, Portugal lutava para manter Angola, Moçambique e Guiné-Bissau, e o Brasil ficou ao lado do colonizador.'},
+ {t:'O alinhamento',y:'1961–1968',env:'Seis fichas do arquivo, fora de ordem, cada uma com um número carimbado, e um quadro de contexto.',
+  q:'Quais fichas seguem a doutrina das fronteiras ideológicas? Em ordem cronológica, os números delas formam o código.',h:['9f2db8f3'],
+  d:['Releiam o contexto: a doutrina é a de Castelo Branco, depois do golpe de 1964, alinhada aos EUA contra o comunismo. As fichas de 1961 seguem outra lógica.','São três fichas, entre maio de 1964 e 1965. A de 1968 fica de fora: recusar um tratado defendido pelos EUA não é alinhamento.'],
+  a:'417',ex:'Seguem as fronteiras ideológicas o rompimento com Cuba (maio de 1964), o discurso de Castelo Branco (julho de 1964) e as tropas na República Dominicana (1965). As fichas de 1961 são da Política Externa Independente, que buscava autonomia na Guerra Fria.',
+  x:'O alinhamento não durou: em 1968, o Brasil recusou o Tratado de Não Proliferação Nuclear, defendido pelos EUA e pela União Soviética.'},
  {t:'A crise',y:'1973',env:'O gráfico do preço do barril de petróleo e um recorte de jornal sobre a crise.',
   q:'Em que ano o preço do barril disparou?',h:['2249a831'],
   d:['Procurem no gráfico o ponto em que a linha dá um salto.','Foi o ano da guerra árabe-israelense de outubro. O ano termina em 3.'],
@@ -143,13 +143,13 @@ const P=[
  {t:'Lagos',y:'1977',env:'Os pedaços rasgados da folha de rosto de um texto apresentado no FESTAC, na Nigéria.',
   q:'Montem a folha de rosto. Qual é a palavra destacada em vermelho?',h:['7038a74e'],
   d:['Comecem pelos pedaços com letras grandes: eles formam o título.','O título é uma pergunta que termina em “… ou realidade?”.'],
-  a:'MITO',ex:'No FESTAC de 1977, Abdias Nascimento apresentou o texto “Democracia racial: mito ou realidade?”, recusado pela organização do colóquio. Ele atribuiu o veto à pressão do governo brasileiro. Em 1978, o texto virou o livro O genocídio do negro brasileiro.',
+  a:'MITO',ex:'No FESTAC de 1977, Abdias Nascimento apresentou o texto “Democracia racial: mito ou realidade?”, recusado pela organização do colóquio. Ele atribuiu o veto à pressão do governo brasileiro e contou o episódio em “Sitiado em Lagos”, capítulo de O quilombismo. Em 1978, a crítica virou o livro O genocídio do negro brasileiro.',
   x:'Uma denúncia de racismo num festival africano desmontava a imagem de harmonia que a diplomacia levava à África.'},
  {t:'Os dois Brasis',y:'1978',env:'Um relatório com seis lacunas.',
   q:'Completem o relatório com os códigos anteriores. Qual sigla preenche a última lacuna?',h:['5751a095','c84cf0d0'],
   d:['Preencham as lacunas 1 a 5 com os códigos que vocês já têm. Falta só a última.','Movimento Negro Unificado: três letras.'],
-  a:'MNU',ex:'Em 7 de julho de 1978, nas escadarias do Theatro Municipal de São Paulo, nasceu o Movimento Negro Unificado, em protesto contra a discriminação racial e a violência policial.',
-  x:'Enquanto a diplomacia vendia harmonia racial, o movimento negro se organizava em plena ditadura para mostrar o contrário.'}
+  a:'MNU',ex:'Em 7 de julho de 1978, nas escadarias do Theatro Municipal de São Paulo, nasceu o Movimento Negro Unificado, em protesto contra a discriminação racial e a violência policial. Entre os fundadores estava a intelectual Lélia Gonzalez.',
+  x:'Lélia Gonzalez chamou de “racismo por denegação” o racismo que se mantém negando que existe: exatamente o que a imagem de democracia racial fazia.'}
 ];
 const KEY='arquivo-secreto-v1';
 const blank=()=>({g:'',s:0,o:{},d:{},f:0});
@@ -225,7 +225,7 @@ function finalView(){
   let h='<div class="stamp">LIBERADO</div><h2>Os dois Brasis</h2><p class="year">'+esc(S.g)+' · tempo final '+total+'</p>';
   h+='<p style="margin-top:18px">Lá fora, a ditadura se aproximava da África e vendia a imagem de um país sem racismo. Aqui dentro, o movimento negro denunciava a discriminação e era vigiado. As seis pastas são a mesma história, contada de dois lados.</p>';
   h+='<div class="sum">'+P.map((p,i)=>'<div><b>'+p.a+'</b> · '+(i+1)+'. '+esc(p.t)+' ('+p.y+')</div>').join('')+'</div>';
-  h+='<div class="final-q">Para o debate: a aproximação com a África foi solidariedade ou estratégia? E o que a imagem de “país sem racismo” escondia aqui dentro?</div>';
+  h+='<div class="final-q">Para o debate: a aproximação com a África foi solidariedade ou estratégia? O que a imagem de “país sem racismo” escondia aqui dentro? E por que a questão racial ficou tanto tempo fora da história oficial da política externa?</div>';
   return h;
 }
 
